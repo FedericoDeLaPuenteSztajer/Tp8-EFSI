@@ -10,22 +10,42 @@ import HomeScreen from './screens/HomeScreen';
 import FeedScreen from './screens/FeedScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import LoginScreen from './screens/LoginScreen';
+import SignUpScreen from './screens/SignUpScreen';
+import LoginErrorScreen from './screens/LoginErrorScreen';
 
 // Import de componentes
 import BigPost from './components/BigPost';
 import SmallPost from './components/SmallPost';
 
+// Constraints
 const Tab = createBottomTabNavigator();
+const name = "josuke"; // usuario harcodeado
+const password = "1234"; // usuario harcodeado
+
+// UseState
+const [account, setAccount] = useState(null);
+
+// UseEffect
+const login = () => {
+  // Si los datos son correctos
+}
+
+const signUp = () => {
+  // Se sobreescriben los datos
+}
 
 const App = () => {
   return (
+    {account ?
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Inicio" component={HomeScreen} />
         <Tab.Screen name="Buscar" component={FeedScreen} />
         <Tab.Screen name="Perfil" component={ProfileScreen} />
       </Tab.Navigator>
-    </NavigationContainer>
+    </NavigationContainer> :
+    <LoginScreen/> 
+  }
   );
 }
 
