@@ -22,7 +22,42 @@ const Tab = createBottomTabNavigator();
 const name = "josuke"; // usuario harcodeado
 const password = "1234"; // usuario harcodeado
 
+function AuthStack() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarLabel: () => null, // Oculta el texto de la pestaña
+        headerShown: false, // El encabezado no se muestra en el TabNavigator
+      })}
+      tabBarOptions={{
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+        showLabel: false, // Importante
+      }}>
+      <Tab.Screen name="Login" component={LoginScreen} />
+      <Tab.Screen name="SignUp" component={SignUpScreen} />
+    </Tab.Navigator>
+  )
+}
 
+function AppStack() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarLabel: () => null, // Oculta el texto de la pestaña
+        headerShown: false, // El encabezado no se muestra en el TabNavigator
+      })}
+      tabBarOptions={{
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+        showLabel: false, // Importante
+      }}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Feed" component={FeedScreen} />
+      <Tab.Screen name="Perfil" component={ProfileScreen} />
+    </Tab.Navigator>
+  )
+}
 
 const App = () => {
   // UseState
@@ -37,25 +72,25 @@ const App = () => {
     // Se sobreescriben los datos
   }
 
-  return (<>
-    {account ? (
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Feed" component={FeedScreen} />
-          <Tab.Screen name="Perfil" component={ProfileScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    ) : (
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Login" component={LoginScreen} />
-          <Tab.Screen name="SignUp" component={SignUpScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    )}
-  </>);
+  return (
+    <NavigationContainer>
+      {account ? (<AppStack />) : (<AuthStack />)}
+    </NavigationContainer>
+  );
 }
+
+/*
+screenOptions={({ route }) => ({
+          
+          tabBarLabel: () => null, // Oculta el texto de la pestaña
+           headerShown: false, // Asegúrate de que no se muestre el encabezado en el TabNavigator
+        })}
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+          showLabel: false, // Asegúrate de que esta opción esté en false
+        }}
+*/
 
 const styles = StyleSheet.create({
   container: {
