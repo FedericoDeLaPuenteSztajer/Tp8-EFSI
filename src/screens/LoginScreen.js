@@ -1,7 +1,7 @@
 import { View, ImageBackground, StyleSheet, Text, TextInput, Image, Button } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-const LoginScreen = () => {
+const LoginScreen = (props) => {
     return (<>
         <View style={styles.BannerSection}>
             <Text style={styles.Title}>Join the Castle Crashers Group today!</Text>

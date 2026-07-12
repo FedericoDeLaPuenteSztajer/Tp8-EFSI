@@ -24,7 +24,7 @@ const RIGHT_USER = {
   password = "1234"
 } // usuario harcodeado
 
-function AuthStack() {
+function AuthStack(props) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -33,8 +33,11 @@ function AuthStack() {
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
         showLabel: false, // Importante
-      })}>
-      <Tab.Screen name="Login" component={LoginScreen} />
+      })}
+    >
+      <Tab.Screen name="Login">
+        {(props) => <LoginScreen login={login} />}
+      </Tab.Screen>
       <Tab.Screen name="SignUp" component={SignUpScreen} />
     </Tab.Navigator>
   )
@@ -58,17 +61,23 @@ function AppStack() {
 }
 
 const App = () => {
-  const [userTry, setUserName] = useState({
-    username = "username",
-    password = "1234"
-  });
 
   // UseState
+  const [userTry, setUserTry] = useState({
+    username = "username",
+    password = "password"
+  });
   const [account, setAccount] = useState(null);
+  const [logFailed, setLogFailed] = useState(false);
 
   // UseEffect
   const login = () => {
-    // Si los datos son correctos
+    // Compara si los datos son correctos
+    if (userTry === RIGHT_USER) {
+      account = RIGHT_USER;
+    } else {
+      setLogFailed = true;
+    }
   }
 
   const signUp = () => {
@@ -78,7 +87,12 @@ const App = () => {
   return (
     <SafeAreaView>
       <NavigationContainer>
-        {account ? (<AppStack />) : (<AuthStack />)}
+        {(account) ?
+          (<AppStack />) :
+          (!logFailed) ?
+            (<AuthStack login={login} signUp={signUp} userTry={userTry} setUserTry={setUserTry}/>) :
+            (<LoginErrorScreen setLogFailed={setLogFailed} />)
+        }
       </NavigationContainer>
     </SafeAreaView>
   );
