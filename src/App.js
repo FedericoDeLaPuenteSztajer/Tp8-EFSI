@@ -22,31 +22,39 @@ const Tab = createBottomTabNavigator();
 const name = "josuke"; // usuario harcodeado
 const password = "1234"; // usuario harcodeado
 
-// UseState
-const [account, setAccount] = useState(null);
 
-// UseEffect
-const login = () => {
-  // Si los datos son correctos
-}
-
-const signUp = () => {
-  // Se sobreescriben los datos
-}
 
 const App = () => {
-  return (
-    {account ?
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Inicio" component={HomeScreen} />
-        <Tab.Screen name="Buscar" component={FeedScreen} />
-        <Tab.Screen name="Perfil" component={ProfileScreen} />
-      </Tab.Navigator>
-    </NavigationContainer> :
-    <LoginScreen/> 
+  // UseState
+  const [account, setAccount] = useState(null);
+
+  // UseEffect
+  const login = () => {
+    // Si los datos son correctos
   }
-  );
+
+  const signUp = () => {
+    // Se sobreescriben los datos
+  }
+
+  return (<>
+    {account ? (
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Feed" component={FeedScreen} />
+          <Tab.Screen name="Perfil" component={ProfileScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    ) : (
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Login" component={LoginScreen} />
+          <Tab.Screen name="SignUp" component={SignUpScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    )}
+  </>);
 }
 
 const styles = StyleSheet.create({
