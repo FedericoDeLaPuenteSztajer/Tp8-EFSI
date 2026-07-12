@@ -19,8 +19,10 @@ import SmallPost from './components/SmallPost';
 
 // Constraints
 const Tab = createBottomTabNavigator();
-const name = "josuke"; // usuario harcodeado
-const password = "1234"; // usuario harcodeado
+const RIGHT_USER = {
+  username = "josuke",
+  password = "1234"
+} // usuario harcodeado
 
 function AuthStack() {
   return (
@@ -28,12 +30,10 @@ function AuthStack() {
       screenOptions={({ route }) => ({
         tabBarLabel: () => null, // Oculta el texto de la pestaña
         headerShown: false, // El encabezado no se muestra en el TabNavigator
-      })}
-      tabBarOptions={{
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
         showLabel: false, // Importante
-      }}>
+      })}>
       <Tab.Screen name="Login" component={LoginScreen} />
       <Tab.Screen name="SignUp" component={SignUpScreen} />
     </Tab.Navigator>
@@ -46,12 +46,10 @@ function AppStack() {
       screenOptions={({ route }) => ({
         tabBarLabel: () => null, // Oculta el texto de la pestaña
         headerShown: false, // El encabezado no se muestra en el TabNavigator
-      })}
-      tabBarOptions={{
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
         showLabel: false, // Importante
-      }}>
+      })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Feed" component={FeedScreen} />
       <Tab.Screen name="Perfil" component={ProfileScreen} />
@@ -60,6 +58,11 @@ function AppStack() {
 }
 
 const App = () => {
+  const [userTry, setUserName] = useState({
+    username = "username",
+    password = "1234"
+  });
+
   // UseState
   const [account, setAccount] = useState(null);
 
@@ -73,29 +76,18 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      {account ? (<AppStack />) : (<AuthStack />)}
-    </NavigationContainer>
+    <SafeAreaView>
+      <NavigationContainer>
+        {account ? (<AppStack />) : (<AuthStack />)}
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
-
-/*
-screenOptions={({ route }) => ({
-          
-          tabBarLabel: () => null, // Oculta el texto de la pestaña
-           headerShown: false, // Asegúrate de que no se muestre el encabezado en el TabNavigator
-        })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-          showLabel: false, // Asegúrate de que esta opción esté en false
-        }}
-*/
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -4,7 +4,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 const ProfileScreen = () => {
     return (
         <>
-
+            <Text>Profile</Text>
         </>)
 };
 
