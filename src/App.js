@@ -20,8 +20,8 @@ import SmallPost from './components/SmallPost';
 // Constraints
 const Tab = createBottomTabNavigator();
 const RIGHT_USER = {
-  username = "josuke",
-  password = "1234"
+  username: "josuke",
+  password: "1234"
 } // usuario harcodeado
 
 function AuthStack(props) {
@@ -36,9 +36,11 @@ function AuthStack(props) {
       })}
     >
       <Tab.Screen name="Login">
-        {(props) => <LoginScreen login={login} />}
+        {(props) => <LoginScreen login={props.login} userTry={props.userTry} setUserTry={props.setUserTry} />}
       </Tab.Screen>
-      <Tab.Screen name="SignUp" component={SignUpScreen} />
+      <Tab.Screen name="SignUp">
+        {(props) => <SignUpScreen signUp={props.signUp} userTry={props.userTry} setUserTry={props.setUserTry} />}
+      </Tab.Screen>
     </Tab.Navigator>
   )
 }
@@ -53,9 +55,15 @@ function AppStack() {
         inactiveTintColor: 'gray',
         showLabel: false, // Importante
       })}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Feed" component={FeedScreen} />
-      <Tab.Screen name="Perfil" component={ProfileScreen} />
+      <Tab.Screen name="Home">
+        {<HomeScreen />}
+      </Tab.Screen>
+      <Tab.Screen name="Feed">
+        {<FeedScreen />}
+      </Tab.Screen>
+      <Tab.Screen name="Perfil">
+        {<ProfileScreen />}
+      </Tab.Screen>
     </Tab.Navigator>
   )
 }
@@ -64,8 +72,8 @@ const App = () => {
 
   // UseState
   const [userTry, setUserTry] = useState({
-    username = "username",
-    password = "password"
+    username: "username",
+    password: "password"
   });
   const [account, setAccount] = useState(null);
   const [logFailed, setLogFailed] = useState(false);
@@ -82,19 +90,25 @@ const App = () => {
 
   const signUp = () => {
     // Se sobreescriben los datos
+    account = userTry;
   }
 
   return (
-    <SafeAreaView>
-      <NavigationContainer>
-        {(account) ?
-          (<AppStack />) :
-          (!logFailed) ?
-            (<AuthStack login={login} signUp={signUp} userTry={userTry} setUserTry={setUserTry}/>) :
-            (<LoginErrorScreen setLogFailed={setLogFailed} />)
-        }
-      </NavigationContainer>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={{
+        padding: 15,
+        flexDirection: 'column',
+      }}>
+        <NavigationContainer>
+          {(account) ?
+            (<AppStack />) :
+            (!logFailed) ?
+              (<AuthStack login={login} signUp={signUp} userTry={userTry} setUserTry={setUserTry} />) :
+              (<LoginErrorScreen setLogFailed={setLogFailed} />)
+          }
+        </NavigationContainer>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

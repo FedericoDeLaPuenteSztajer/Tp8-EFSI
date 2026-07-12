@@ -4,7 +4,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 const LoginScreen = (props) => {
     return (<>
         <View style={styles.BannerSection}>
-            <Text style={styles.Title}>Join the Castle Crashers Group today!</Text>
+            <Text style={styles.Title}>Inicia Sesión!</Text>
         </View>
 
         <View style={styles.DataSection}>
@@ -12,23 +12,24 @@ const LoginScreen = (props) => {
                 style={styles.DataInput}
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={}
-                value={props.userName}
+                onChangeText={props.setUserTry["username"]}
+                value={props.userTry["username"]}
             />
             <TextInput
                 style={styles.DataInput}
                 editable
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={props.setPassword}
-                value={props.password}
+                onChangeText={props.setUserTry["password"]}
+                value={props.userTry["password"]}
             />
         </View>
 
         <View>
             <Button
                 title='Join'
-                color='#109e36'
+                color='#b62edf'
+                onPress={() => props.login()}
             />
         </View>
     </>)
@@ -42,12 +43,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'
-    },
-    BannerImg: {
-        width: '100%',
-        height: 200,
-        resizeMode: 'contain',
-        marginTop: 10,
     },
     DataSection: {
         marginTop: 20,
