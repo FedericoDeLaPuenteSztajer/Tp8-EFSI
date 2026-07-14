@@ -28,30 +28,38 @@ function AuthStack(props) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarLabel: () => null, // Oculta el texto de la pestaña
+        tabBarLabelStyle: {
+          fontSize: 14,
+          marginTop: -10,
+        },
+        tabBarIcon: () => null,
         headerShown: false, // El encabezado no se muestra en el TabNavigator
-        activeTintColor: 'tomato',
+        activeTintColor: '#d772e2',
         inactiveTintColor: 'gray',
         showLabel: false, // Importante
       })}
     >
       <Tab.Screen name="Login">
-        {(props) => <LoginScreen login={props.login} userTry={props.userTry} setUserTry={props.setUserTry} />}
+        {() => <LoginScreen login={props.login} userTry={props.userTry} setUserTry={props.setUserTry} />}
       </Tab.Screen>
       <Tab.Screen name="SignUp">
-        {(props) => <SignUpScreen signUp={props.signUp} userTry={props.userTry} setUserTry={props.setUserTry} />}
+        {() => <SignUpScreen signUp={props.signUp} userTry={props.userTry} setUserTry={props.setUserTry} />}
       </Tab.Screen>
     </Tab.Navigator>
   )
 }
 
-function AppStack() {
+function AppStack(props) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarLabel: () => null, // Oculta el texto de la pestaña
+        tabBarLabelStyle: {
+          fontSize: 14,
+          marginTop: -10,
+        },
+        tabBarIcon: () => null,
         headerShown: false, // El encabezado no se muestra en el TabNavigator
-        activeTintColor: 'tomato',
+        activeTintColor: '#d772e2',
         inactiveTintColor: 'gray',
         showLabel: false, // Importante
       })}>
@@ -81,23 +89,24 @@ const App = () => {
   // UseEffect
   const login = () => {
     // Compara si los datos son correctos
-    if (userTry === RIGHT_USER) {
-      account = RIGHT_USER;
+    if (userTry.username === RIGHT_USER.username && userTry.password === RIGHT_USER.password) {
+      setAccount({ username: userTry.username, password: userTry.password });
     } else {
-      setLogFailed = true;
+      setUserTry({ username: "username", password: "password" });
+      setLogFailed(true);
     }
   }
 
   const signUp = () => {
     // Se sobreescriben los datos
-    account = userTry;
+    setAccount({ username: userTry.username, password: userTry.password });
   }
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{
-        padding: 15,
-        flexDirection: 'column',
+        flex: 1,
+        padding: 15
       }}>
         <NavigationContainer>
           {(account) ?
@@ -113,7 +122,7 @@ const App = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  sessionContainer: {
     flex: 1,
     backgroundColor: '#ffffff',
     alignItems: 'center',
